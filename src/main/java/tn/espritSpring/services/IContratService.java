@@ -17,6 +17,7 @@ public interface IContratService {
 
   public Integer nbContratsValides(Date startDate, Date endDate);
 
+  public String getChiffreAffaireEntreDeuxDate(Date startDate, Date endDate);
 
 
 }

@@ -1,5 +1,6 @@
 package tn.espritSpring.services;
 
+import tn.espritSpring.DAO.entites.Departement;
 import tn.espritSpring.DAO.entites.Universite;
 
 import java.util.List;
@@ -13,4 +14,6 @@ public interface IUniversiteService {
     public Universite updateUniversite (Universite u );
      void deleteUniversite(Integer idUniv);
     public Universite getUniversiteById(Integer idUniv) ;
+
+    public List<Departement> retrieveDepartementsByUniversite(Integer idUniv);
 }

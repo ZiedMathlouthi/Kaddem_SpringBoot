@@ -7,14 +7,7 @@ import lombok.Setter;
 import java.io.Serializable;
 import java.util.Set;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.ManyToMany;
-import javax.persistence.OneToOne;
+import javax.persistence.*;
 
 @Entity
 @Getter
@@ -36,7 +29,11 @@ public class Equipe implements Serializable {
 	@Column(name="niveau")
 	private Niveau niveau;
 
-	@ManyToMany(cascade = CascadeType.PERSIST, mappedBy="equipes")
+	@Column(name="photo")
+	private byte[] photo;
+
+
+	@ManyToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER , mappedBy="equipes")
 	private Set<Etudinat> etudinats;
 	
 	@OneToOne

@@ -1,14 +1,21 @@
 package tn.espritSpring.services;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import tn.espritSpring.DAO.entites.*;
 import tn.espritSpring.repositories.IEquipeRepository;
 import tn.espritSpring.repositories.IEtudinatRepository;
 
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.time.temporal.ChronoUnit;
+import java.util.Iterator;
 import java.util.List;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class EquipeImpl implements IEquipeService{
@@ -18,9 +25,6 @@ public class EquipeImpl implements IEquipeService{
     private final   IEquipeRepository equipeRepository ;
 
     private final IEtudinatRepository etudinatRepository ;
-
-
-
 
 
 
@@ -48,5 +52,54 @@ public class EquipeImpl implements IEquipeService{
     }
 
 
+    @Scheduled(cron = "*/10 * * * * *")
+    void faireEvoluerEquipes(){
+
+        Iterator<Equipe> le = equipeRepository.findAll().iterator();
+        while (le.hasNext()) {
+            Equipe equipe = le.next() ;
+
+            if (equipe.getNiveau().equals(Niveau.JUNIOR) || equipe.getNiveau().equals(Niveau.SENIOR)){
+
+                if (findAncienMembre(equipe) >= 3){
+                    if (equipe.getNiveau().equals(Niveau.JUNIOR)){
+                        equipe.setNiveau(Niveau.SENIOR);
+
+                        System.out.println("passage equipe "+equipe.getIdEquipe()+" de JUINIOR vers SENIOR");
+                    }
+                    else{ equipe.setNiveau(Niveau.EXPERT);
+                    System.out.println("passage equipe "+equipe.getIdEquipe()+" de SENIOR vers EXPERT");}
+                    equipeRepository.save(equipe);
+                }
+            }
+        }
+    }
+
+    private int findAncienMembre(Equipe equipe) {
+
+        int count = 0 ;
+
+        for (Etudinat etudinat :equipe.getEtudinats()
+             ) {
+            if(etudinat.getContrat()!=null && etudinat.getContrat().getDateDebutContrat()!=null ){
+                System.out.println("dateContrat "+etudinat.getContrat().getDateDebutContrat());
+                System.out.println(LocalDate.now());
+                LocalDate dateContrat = etudinat.getContrat().getDateDebutContrat();
+               // if(ChronoUnit.YEARS.between(dateContrat,LocalDate.now())>=1)
+
+                    count++ ;
+            }
+        }
+        return count ;
+    }
+
+
 
 }
+
+
+
+
+
+
+

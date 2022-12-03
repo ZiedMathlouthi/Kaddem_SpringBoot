@@ -34,8 +34,6 @@ public class DetailEquipeController {
     { iDetailEquipeService.assignDetailEquipeToEquipe(idDetailEquipe,idEquipe);}
 
 
-
-
     @DeleteMapping("/deleteDetailEquipe/{idDetailEquipe}")
     public void deleteDetailEquipe(@PathVariable("idDetailEquipe") int idDetailEquipe) {iDetailEquipeService.deleteDetailEquipe(idDetailEquipe);}
 

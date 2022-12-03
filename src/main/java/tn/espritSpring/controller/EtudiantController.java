@@ -15,7 +15,6 @@ public class EtudiantController {
 
    public final IEtudiantService iEudiantService;
 
-
     @GetMapping("/getAllEtudaints")
     public List<Etudinat> getAllEtudaint() {
         return iEudiantService.getAllEtudiant();
@@ -43,10 +42,10 @@ public class EtudiantController {
     { iEudiantService.assignContratToEtudiant(idEtudiant,idContart);}
 
     //Affectation Etudiant Contrat Equipe
-    @PutMapping("/assignEtudiant/{idContart}/{idEquipe}")
+    @PutMapping("/assignEtudiant/{idEtudiant}/{idContart}/{idEquipe}")
     public  Etudinat addAndAssignEtudiantToEquipeAndContract
-            (@RequestBody Etudinat e,@PathVariable("idContart") Integer idContart, @PathVariable("idEquipe") Integer idEquipe){
-        return iEudiantService.addAndAssignEtudiantToEquipeAndContract(e,idContart,idEquipe);
+            (@PathVariable("idEtudiant") Integer idEtudiant,@PathVariable("idContart") Integer idContart, @PathVariable("idEquipe") Integer idEquipe){
+        return iEudiantService.addAndAssignEtudiantToEquipeAndContract(idEtudiant,idContart,idEquipe);
     }
 
 
@@ -74,6 +73,16 @@ public class EtudiantController {
     }
 
 
+    @GetMapping("/carteetudiant/{idEtudiant}")
+
+    public String generecarteetudpdf (@PathVariable("idEtudiant") Integer idEtudiant){
+        return iEudiantService.generecarteetudpdf(idEtudiant) ;
+    }
+
+    @GetMapping({"/listetudiantexcel"})
+    public void getlistetudiantExcel() {
+        this.iEudiantService.getlistetudiantExcel();
+    }
 
 
 }

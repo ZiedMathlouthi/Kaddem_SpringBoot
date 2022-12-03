@@ -2,6 +2,7 @@ package tn.espritSpring.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
+import tn.espritSpring.DAO.entites.Departement;
 import tn.espritSpring.DAO.entites.Universite;
 import tn.espritSpring.services.IUniversiteService;
 
@@ -41,4 +42,10 @@ public class UniversiteController {
     public Universite getEtudiantById(@PathVariable("idUniv") int idUniv) {
         return iUniversiteService.getUniversiteById(idUniv);
     }
+
+    @GetMapping("/getDepartmentByUniversity/{idUniv}")
+    public List<Departement> retrieveDepartementsByUniversite(@PathVariable Integer idUniv) {
+        return iUniversiteService.retrieveDepartementsByUniversite(idUniv);
+    }
+
 }

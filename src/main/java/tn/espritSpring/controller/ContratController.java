@@ -41,4 +41,11 @@ public class ContratController {
     }
 
 
+    @GetMapping("/affaire/{startDate}/{endDate}")
+    public  void calculChiffreAffaire(@PathVariable("startDate") @DateTimeFormat(pattern = "yyyy-MM-dd") Date startDate,@PathVariable("endDate") @DateTimeFormat(pattern = "yyyy-MM-dd") Date endDate){
+        iContratService.getChiffreAffaireEntreDeuxDate(startDate,endDate);
+    }
+
+
+
 }

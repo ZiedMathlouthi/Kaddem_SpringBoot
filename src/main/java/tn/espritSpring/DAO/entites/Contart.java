@@ -6,6 +6,7 @@ import lombok.Setter;
 
 import java.io.Serializable;
 import java.sql.Date;
+import java.time.LocalDate;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -29,10 +30,10 @@ public class Contart implements Serializable {
 
 	
 	@Column(name="dateDebutContrat")
-	private Date dateDebutContrat;
+	private LocalDate dateDebutContrat;
 
 	@Column(name="dateFinContrat")
-	private Date dateFinContrat;
+	private LocalDate dateFinContrat;
 
 	@Column(name="specialite")
 	private Specialite specialite;
@@ -43,8 +44,7 @@ public class Contart implements Serializable {
 	@Column(name="montnatContrat")
 	private Long montnatContrat;
 
-	@ManyToOne
-	private  Etudinat etudinat;
+
 	
 	
 	

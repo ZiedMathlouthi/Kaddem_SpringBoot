@@ -13,7 +13,7 @@ public interface IEquipeService {
   public  Equipe addEquipe(Equipe e);
    public Equipe updateEquipe (Equipe e );
 
-     void deleteEquipe(Integer idEquipe);
+   void deleteEquipe(Integer idEquipe);
    public Equipe getEquipeById(Integer idEquipe) ;
 
 

@@ -15,6 +15,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.Set;
 
 
@@ -35,20 +36,26 @@ public class Etudinat implements Serializable {
 	
 	@Column(name="prenomE")
 	private String prenomE;
-	
-	
+
 	@Column(name="nomE")
 	private String nomE;
+
+	private LocalDate DateNaissance;
+
+	private Genre genre ;
+
+	@Column(name="photo")
+	private byte[] photo;
 	
 	@Column(name="option")
 	private Option option;
 	
-	@OneToMany(cascade = CascadeType.ALL, mappedBy="etudinat")
-	private Set<Contart> contrats;
+	@OneToOne
+	private Contart contrat;
 
 	@ManyToOne(cascade = CascadeType.PERSIST)
 	private Departement  departement;
-	
+
 
 	@ManyToMany(fetch = FetchType.EAGER) //(cascade = CascadeType.PERSIST)
 	@JsonIgnore

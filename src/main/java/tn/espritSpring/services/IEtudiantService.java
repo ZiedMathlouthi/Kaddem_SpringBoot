@@ -9,7 +9,7 @@ public interface IEtudiantService {
 
     void assignContratToEtudiant (Integer idEtudiant ,Integer idContart  );
 
-  public  Etudinat addAndAssignEtudiantToEquipeAndContract(Etudinat e, Integer idContart, Integer idEquipe);
+  public  Etudinat addAndAssignEtudiantToEquipeAndContract(Integer idEtudiant, Integer idContart, Integer idEquipe);
 
    public List<Etudinat> getAllEtudiant() ;
    public Etudinat addEtudiant(Etudinat etudinat);
@@ -26,4 +26,9 @@ public interface IEtudiantService {
    List<Etudinat> retriveEtudiantByDepartementName (String nomDepart);
 
     void assignEtudiantToEquipe(Integer idEtudiant, Integer idEquipe);
+
+    public String generecarteetudpdf(Integer idEtudiant);
+
+ void getlistetudiantExcel();
+
 }

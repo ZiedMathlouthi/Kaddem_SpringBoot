@@ -1,16 +1,17 @@
 package tn.espritSpring.services;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import tn.espritSpring.DAO.entites.Contart;
 import tn.espritSpring.DAO.entites.Departement;
-import tn.espritSpring.DAO.entites.Etudinat;
 import tn.espritSpring.DAO.entites.Universite;
 import tn.espritSpring.repositories.IUniversiteRepository;
 
+import java.util.ArrayList;
 import java.util.List;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
  public class UniversiteImpl implements IUniversiteService{
@@ -38,5 +39,15 @@ import java.util.List;
     @Override
     public Universite getUniversiteById(Integer idUniv) {
         return universiteRepository.findById(idUniv).orElse(null);
+    }
+
+    @Override
+    public List<Departement> retrieveDepartementsByUniversite(Integer idUniversite) {
+        Universite universite = universiteRepository.findById(idUniversite).orElse(null);
+        List<Departement> listDepart = new ArrayList<>();
+        for (Departement d:universite.getDepartements()) {
+            listDepart.add(d);
+        }
+        return listDepart;
     }
 }
