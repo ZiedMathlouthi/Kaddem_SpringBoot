@@ -16,12 +16,12 @@ public interface IEtudinatRepository extends CrudRepository<Etudinat , Integer> 
     List<Etudinat> retriveEtudiantByOption(@Param("option") Option op);
 
 
-    @Query("select e from Etudinat e where e.departement.nomDepart =: nomDepart")
+    @Query("select e from Etudinat e where e.departement.nomDepartement =: nomDepart")
     List<Etudinat> retriveEtudiantByDepartement (@Param("nomDepart") String nomDepart);
 
 
 
-    @Query("select e from Etudinat e inner join e.departement ee where ee.nomDepart = :name")
+    @Query("select e from Etudinat e inner join e.departement ee where ee.nomDepartement = :name")
     List<Etudinat> retriveEtudiantByDepartementName (@Param("name") String nomDepartement);
 
 }

@@ -1,6 +1,7 @@
 package tn.espritSpring.services;
 
 import tn.espritSpring.DAO.entites.Etudinat;
+import tn.espritSpring.DAO.entites.Universite;
 
 import java.util.List;
 
@@ -30,5 +31,11 @@ public interface IEtudiantService {
     public String generecarteetudpdf(Integer idEtudiant);
 
  void getlistetudiantExcel();
+
+ void notifierEtudiant(Integer idEtudiant) ;
+
+ Etudinat update(Etudinat etudinat);
+
+
 
 }

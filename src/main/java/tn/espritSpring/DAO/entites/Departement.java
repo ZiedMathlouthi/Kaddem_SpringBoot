@@ -1,41 +1,34 @@
 package tn.espritSpring.DAO.entites;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
-import lombok.Setter;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-import javax.persistence.Column;
 
+import com.sun.istack.NotNull;
+import lombok.*;
+import tn.espritSpring.DAO.entites.Etudinat;
+
+import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Set;
 
-import javax.persistence.*;
-
-
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-
 @Entity
+@Table(name = "Departement")
 @Getter
 @Setter
-@RequiredArgsConstructor
+@AllArgsConstructor
+@NoArgsConstructor
+
 public class Departement implements Serializable {
-
-	private static final long serialVersionUID = 1L;
-	@Id
-	@GeneratedValue (strategy = GenerationType.IDENTITY)
-	@Column(name="idDepart")
-	private Integer idDepart;
-	
-	@Column(name="nomDepart")
-	private String nomDepart;
-	
-	
-	@JsonIgnore
-	@OneToMany(cascade = CascadeType.ALL, mappedBy="departement")
-	private Set<Etudinat> etudiants;
-
+    @Id
+    @GeneratedValue (strategy = GenerationType.IDENTITY)
+    @Column(name = "idDepartement")
+    private Long idDepartement;
+    private String nomDepartement;
+    private  String code;
+    private  String type;
+    private  String description;
+    @OneToMany(cascade = CascadeType.ALL,mappedBy = "departement")
+    private Set<Etudinat> etudiants;
+    @ManyToOne
+    Universite universite;
 }

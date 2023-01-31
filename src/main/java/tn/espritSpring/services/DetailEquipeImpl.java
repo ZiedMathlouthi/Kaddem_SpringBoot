@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import tn.espritSpring.DAO.entites.DetailEquipe;
 import tn.espritSpring.DAO.entites.Equipe;
+import tn.espritSpring.DAO.entites.Etudinat;
 import tn.espritSpring.repositories.IDetailEquipeRepository;
 import tn.espritSpring.repositories.IEquipeRepository;
 
@@ -25,10 +26,10 @@ public class DetailEquipeImpl implements IDetailEquipeService{
 
     @Override
     public void assignDetailEquipeToEquipe(Integer idDetailEquipe , Integer idEquipe) {
-
         Equipe equipe=equipeRepository.findById(idEquipe).orElse(null);
         DetailEquipe detailEquipe=getDetailEquipeById(idDetailEquipe);
         equipe.setDetailEquipe(detailEquipe);
+        detailEquipe.setEquipe(equipe);
         equipeRepository.save(equipe);
     }
 
@@ -56,6 +57,11 @@ public class DetailEquipeImpl implements IDetailEquipeService{
     @Override
     public DetailEquipe getDetailEquipeById(Integer idDetailEquipe) {
         return detailEquipeRepository.findById(idDetailEquipe).orElse(null);
+    }
+
+    @Override
+    public DetailEquipe update(DetailEquipe detailEquipe) {
+        return detailEquipeRepository.save(detailEquipe);
     }
 
     @Override

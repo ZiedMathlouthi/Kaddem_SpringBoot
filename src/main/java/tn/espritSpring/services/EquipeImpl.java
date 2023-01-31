@@ -19,14 +19,9 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class EquipeImpl implements IEquipeService{
-
-
     @Autowired
     private final   IEquipeRepository equipeRepository ;
-
     private final IEtudinatRepository etudinatRepository ;
-
-
 
     @Override
     public List<Equipe> getAllEquipe() {
@@ -51,7 +46,6 @@ public class EquipeImpl implements IEquipeService{
         return equipeRepository.findById(idEquipe).orElse(null);
     }
 
-
     @Scheduled(cron = "*/10 * * * * *")
     void faireEvoluerEquipes(){
 
@@ -64,11 +58,10 @@ public class EquipeImpl implements IEquipeService{
                 if (findAncienMembre(equipe) >= 3){
                     if (equipe.getNiveau().equals(Niveau.JUNIOR)){
                         equipe.setNiveau(Niveau.SENIOR);
-
                         System.out.println("passage equipe "+equipe.getIdEquipe()+" de JUINIOR vers SENIOR");
                     }
                     else{ equipe.setNiveau(Niveau.EXPERT);
-                    System.out.println("passage equipe "+equipe.getIdEquipe()+" de SENIOR vers EXPERT");}
+                        System.out.println("passage equipe "+equipe.getIdEquipe()+" de SENIOR vers EXPERT");}
                     equipeRepository.save(equipe);
                 }
             }
@@ -76,30 +69,45 @@ public class EquipeImpl implements IEquipeService{
     }
 
     private int findAncienMembre(Equipe equipe) {
-
         int count = 0 ;
-
         for (Etudinat etudinat :equipe.getEtudinats()
-             ) {
+        ) {
             if(etudinat.getContrat()!=null && etudinat.getContrat().getDateDebutContrat()!=null ){
                 System.out.println("dateContrat "+etudinat.getContrat().getDateDebutContrat());
                 System.out.println(LocalDate.now());
                 LocalDate dateContrat = etudinat.getContrat().getDateDebutContrat();
-               // if(ChronoUnit.YEARS.between(dateContrat,LocalDate.now())>=1)
-
-                    count++ ;
+                // if(ChronoUnit.YEARS.between(dateContrat,LocalDate.now())>=1)
+                count++ ;
             }
         }
         return count ;
     }
 
+    @Override
+    public List<Equipe> findEquipeByDetailEquipeThematiqueLike(String th) {
+        return equipeRepository.findEquipeByDetailEquipeThematiqueLike(th);
+    }
 
+    @Override
+    public List<Equipe> findEquipeByEtudinatsIdEtudiant(Integer id) {
+        return equipeRepository.findEquipeByEtudinatsIdEtudiant(id);
+    }
 
+    @Override
+    public List<Equipe> findByEtudinatsIdEtudiantAndDetailEquipeThematiqueNotNull(Integer idEtudiant) {
+        return equipeRepository.findByEtudinatsIdEtudiantAndDetailEquipeThematiqueNotNull(idEtudiant);
+    }
+
+    @Override
+    public List<Equipe> findByEtudinatsIdEtudiantAndEtudinatsDepartementIdDepart(Integer idEtudiant, Integer idDepart) {
+        return equipeRepository.findByEtudinatsIdEtudiantAndEtudinatsDepartementIdDepartement(idEtudiant, idDepart);
+    }
+    @Override
+    public List<Equipe> retriveEquipeByNiveauAndThematique(Niveau niveau, String thematique) {
+        return equipeRepository.retriveEquipeByNiveauAndThematique(niveau, thematique);
+    }
+    @Override
+    public Equipe update(Equipe equipe) {
+        return equipeRepository.save(equipe);
+    }
 }
-
-
-
-
-
-
-

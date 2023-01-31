@@ -42,6 +42,7 @@ public class Etudinat implements Serializable {
 
 	private LocalDate DateNaissance;
 
+	@Enumerated(EnumType.STRING)
 	private Genre genre ;
 
 	@Column(name="photo")
@@ -49,10 +50,13 @@ public class Etudinat implements Serializable {
 	
 	@Column(name="option")
 	private Option option;
+
+	private String email ;
 	
 	@OneToOne
 	private Contart contrat;
 
+	@JsonIgnore
 	@ManyToOne(cascade = CascadeType.PERSIST)
 	private Departement  departement;
 

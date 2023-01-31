@@ -10,7 +10,7 @@ import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
-public interface IContartRepository extends CrudRepository<Contart , Integer> {
+public interface    IContartRepository extends CrudRepository<Contart , Integer> {
 
 
 

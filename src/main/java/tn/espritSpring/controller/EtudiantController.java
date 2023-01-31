@@ -4,6 +4,7 @@ package tn.espritSpring.controller;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import tn.espritSpring.DAO.entites.Etudinat;
+import tn.espritSpring.DAO.entites.Universite;
 import tn.espritSpring.services.IEtudiantService;
 
 import java.util.List;
@@ -11,6 +12,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/etudiant")
 @RequiredArgsConstructor
+@CrossOrigin("*")
 public class EtudiantController {
 
    public final IEtudiantService iEudiantService;
@@ -66,12 +68,18 @@ public class EtudiantController {
         return iEudiantService.retrieveEtudiant(idContart);
     }
 
+    @PutMapping("/put/{idEtudiant}")
+    public void update(@PathVariable("idEtudiant") Integer id, @RequestBody Etudinat etudinat){
+
+        etudinat.setIdEtudiant(id);
+        iEudiantService.update(etudinat);
+    }
+
 
     @GetMapping("/getByDep/{name}")
     public List<Etudinat> getByname(@PathVariable("name") String name){
         return iEudiantService.retriveEtudiantByDepartementName(name);
     }
-
 
     @GetMapping("/carteetudiant/{idEtudiant}")
 
@@ -85,4 +93,8 @@ public class EtudiantController {
     }
 
 
+    @GetMapping("/notifieretudiant/{idEtudiant}")
+    public void notifierEtudiant (@PathVariable("idEtudiant") Integer idEtudiant){
+         iEudiantService.notifierEtudiant(idEtudiant); ;
+    }
 }

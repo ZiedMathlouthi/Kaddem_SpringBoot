@@ -1,51 +1,65 @@
 package tn.espritSpring.controller;
 
-import lombok.RequiredArgsConstructor;
+import lombok.AllArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import tn.espritSpring.DAO.entites.Departement;
 import tn.espritSpring.DAO.entites.Universite;
-import tn.espritSpring.services.IUniversiteService;
+import tn.espritSpring.services.DepartementServiceImpl;
+import tn.espritSpring.services.UniversiteServiceImpl;
+
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/Universite")
-@RequiredArgsConstructor
+@AllArgsConstructor
+@CrossOrigin(origins = {"http://localhost:4200"})
 public class UniversiteController {
+    UniversiteServiceImpl universiteService;
+    DepartementServiceImpl departementService;
+    //get all Universite
+    @GetMapping("/getallUniversite")
+    public List<Universite> GetUni(){
 
-    public final  IUniversiteService iUniversiteService;
-
-    @GetMapping("/getAllUniversite")
-    public List<Universite> getAllUniversite() {
-        return iUniversiteService.getAllUniversite();
+        return  universiteService.getAllUniversite();
     }
 
-    @PostMapping("/addUniversite")
-    public Universite addUniversite(@RequestBody Universite u) {return iUniversiteService.addUniversite(u);}
-
-
-
-    @PutMapping("/updateUniversite")
-    public Universite updateUniversite(@RequestBody Universite u) {
-        return iUniversiteService.updateUniversite(u);
+    //add new Univ
+    @PostMapping("/addUniversite/")
+    public void  addUniv(@RequestBody Universite U  ){
+        universiteService.addUniversite(U);
     }
+    //update Univ
+    @PutMapping("/updateUniversite/{idUni}")
+    public void updateUni(@PathVariable("idUni") Long id, @RequestBody Universite E){
 
-
-
-
-    @DeleteMapping("/deleteUniversite/{idUniv}")
-    public void deleteUniversite(@PathVariable("idUniv") int idUniv) {
-        iUniversiteService.deleteUniversite(idUniv);
+        E.setIdUniversite(id);
+        universiteService.updateUniversite(E);
     }
+    @PutMapping("/updateUniversite/")
+    @ResponseBody
+    public Universite updateUniversite(@RequestBody Universite E) {
 
-    @GetMapping("/getbyid/{idUniv}")
-    public Universite getEtudiantById(@PathVariable("idUniv") int idUniv) {
-        return iUniversiteService.getUniversiteById(idUniv);
+        return   universiteService.updateUniversite(E);
     }
+    //Delete Univ
+    @DeleteMapping("/deleteUniversite/{idUni}")
+    public  void deleteUni(@PathVariable("idUni") Long id){
 
-    @GetMapping("/getDepartmentByUniversity/{idUniv}")
-    public List<Departement> retrieveDepartementsByUniversite(@PathVariable Integer idUniv) {
-        return iUniversiteService.retrieveDepartementsByUniversite(idUniv);
+        universiteService.deleteUniversite(id);
     }
+    //Add Univ To Depart
+    @PostMapping("/addUniversiteToDepartement/{idUni}/{idDepart}")
+    public void  addUnivtoDep(@PathVariable("idUni") Long idU,@PathVariable("idDepart") Long id){
+        universiteService.assignDepartToUni(idU, id);
+    }
+    //nombre totale department by iduniv
+    @GetMapping("/nbDepartment/{idUni}")
+    public long getnbrDepartmentByuniver(@PathVariable("idUni") Long idU) {
+        return universiteService.nbTotalDepartment(idU);
+    }
+    @GetMapping("/universite/{idUni}")
 
+    public Universite getUniversiteById(@PathVariable("idUni") Long idU) {
+        return universiteService.getUnid(idU);
+    }
 }

@@ -1,5 +1,6 @@
 package tn.espritSpring.DAO.entites;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
@@ -23,18 +24,15 @@ public class DetailEquipe implements Serializable {
 	@GeneratedValue (strategy = GenerationType.IDENTITY)
 	@Column(name="idDetailEquipe")
 	private Integer idDetailEquipe;
-	
+
 	@Column(name="salle")
 	private String salle;
-	
+
 	@Column(name="thematique")
 	private String thematique;
-	
-	
-	@OneToOne(mappedBy="detailEquipe")
-	private Equipe equipe;
-	
-	
-	
 
+
+	@OneToOne(mappedBy="detailEquipe")
+	@JsonIgnore
+	private Equipe equipe;
 }
